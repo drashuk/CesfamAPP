@@ -8,6 +8,10 @@ urlpatterns = [
     path('api/listarMedicamentos', listarMedicamentos, name='listarMedicamentos'),
     path('api/agregarMedicamentos', agregarMedicamentos, name='agregarMedicamentos'),
     path('api/gestionarMedicamentos/<idMed>', gestionarMedicamentos, name='gestionarMedicamentos'),
-    path('', index, name='index')
+    path('api/listarFichas', listarFichas, name='listarFichas'),
+    path('api/agregarFicha', agregarFicha, name='agregarFicha'),
+    path('api/gestionarFicha/<idFicha>', gestionarFicha, name='gestionarFicha'),
 ]
 
+
+# api/gestionarMedicamentos/1 

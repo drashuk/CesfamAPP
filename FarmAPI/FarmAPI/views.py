@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import MedicamentoSerializer
-from .models import Medicamento
+from .serializers import MedicamentoSerializer, PacienteSerializer
+from .models import Medicamento, Paciente
 from rest_framework import status
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from django.shortcuts import render, redirect
@@ -11,8 +11,8 @@ from django.shortcuts import render, redirect
 
 
 
-@csrf_exempt
-@api_view(['GET'])
+@csrf_exempt 
+@api_view(['GET']) 
 
 
 def listarMedicamentos(request):
@@ -44,6 +44,7 @@ def gestionarMedicamentos(request, idMed):
         return Response(MedicamentoSerializer(medicamento).data)
 
     elif request.method == 'PUT':
+        medicamento = Medicamento.objects.get(idMed=idMed)
         serializer = MedicamentoSerializer(medicamento, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -58,3 +59,47 @@ def index(request):
     return render(request, 'index.html')
 
 
+def login(request):
+    return render(request, 'login.html')
+
+@api_view(['GET']) 
+
+
+def listarFichas(request):
+    if request.method == 'GET':
+        fichas = Paciente.objects.all()
+        serializer = PacienteSerializer(fichas, many=True)
+        return Response(serializer.data)
+
+@api_view(['POST'])
+
+def agregarFicha(request):
+    if request.method == 'POST':
+        serializer = PacienteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+
+def gestionarFicha(request, idFicha):
+    try:
+        ficha = Paciente.objects.get(idFicha=idFicha)
+    except Paciente.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        return Response(PacienteSerializer(ficha).data)
+
+    elif request.method == 'PUT':
+        ficha = Paciente.objects.get(idFicha=idFicha)
+        serializer = PacienteSerializer(ficha, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        ficha.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

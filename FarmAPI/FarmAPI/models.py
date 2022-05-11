@@ -11,9 +11,14 @@ class Medicamento(models.Model):
         return self.nombreMed
 
 
-class Paciente(models.Model):
-    idPac = models.IntegerField(primary_key =True, unique=True, blank=True)
-    idFicha = models.IntegerField(blank=True)
-    idDr = models.IntegerField(blank=True)
+class Ficha(models.Model):
+    idPac = models.IntegerField(unique=True, blank=True)
+    rutPac = models.CharField(max_length=100, unique=True, blank=True)
+    nombrePac = models.CharField(max_length=100, blank=True)
+    idFicha = models.IntegerField(primary_key =True, blank=True, unique=True)
+    idDr = models.IntegerField(blank=True, unique=True)
     diagnostico = models.CharField(max_length=100, blank=True)
     prescripcion = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.nombrePac

@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/listarFichas', listarFichas, name='listarFichas'),
     path('api/agregarFicha', agregarFicha, name='agregarFicha'),
     path('api/gestionarFicha/<idFicha>', gestionarFicha, name='gestionarFicha'),
+    path('', index, name='index'),
 ]
 
 

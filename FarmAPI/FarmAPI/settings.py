@@ -83,13 +83,18 @@ DATABASES = {
     'ficha': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ficha',
-        'USER': 'paciente',
-        'PASSWORD': 'paciente123',
+        'USER': 'ficha',
+        'PASSWORD': 'ficha123',
         'PORT': '3306',
         'HOST': 'localhost',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
 
+
+DATABASE_ROUTERS = [ 'FarmAPI.dbRouter.FichaRouter', 'FarmAPI.dbRouter.MedicamentoRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Medicamento, Paciente
+from .models import Medicamento, Ficha
 
 class MedicamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicamento
         fields = '__all__'
 
-class PacienteSerializer(serializers.ModelSerializer):
+class FichaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Paciente
+        model = Ficha
         fields = '__all__'
